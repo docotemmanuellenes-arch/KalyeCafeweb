@@ -1,1 +1,628 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalye Cafe | Coffee Experience</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: {
+                            800: '#1C191E',
+                            900: '#121014',
+                            950: '#09080A',
+                        },
+                        snow: '#FFFFFF',
+                        chalk: '#E4E4E7',
+                        burgundy: {
+                            DEFAULT: '#7A1C24',
+                            dark: '#541016',
+                            light: '#9E2A34',
+                        },
+                        crimson: {
+                            DEFAULT: '#B91C2C',
+                            hover: '#991B1B',
+                            bright: '#DC2626',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #09080A;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7A1C24;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B91C2C;
+        }
 
+        /* Glassmorphism Header */
+        .glass-nav {
+            background: rgba(9, 8, 10, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Custom subtle animations */
+        @keyframes steam {
+            0% { transform: translateY(0) scaleX(1); opacity: 0; }
+            50% { opacity: 0.7; }
+            100% { transform: translateY(-20px) scaleX(1.3); opacity: 0; }
+        }
+        .animate-steam {
+            animation: steam 3s infinite ease-out;
+        }
+
+        /* Hero Image Overlay */
+        .hero-bg {
+            background: linear-gradient(180deg, rgba(9, 8, 10, 0.68) 0%, rgba(122, 28, 36, 0.25) 55%, rgba(9, 8, 10, 0.96) 100%),
+                        url('https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Badge glow effect */
+        .crimson-glow {
+            box-shadow: 0 0 18px rgba(185, 28, 44, 0.35);
+        }
+
+        /* Classic & Bold Burgundy / Red / Black Animated Order Button */
+        .btn-order {
+            background: linear-gradient(45deg, #4A0E14, #B91C2C, #141216, #7A1C24, #DC2626);
+            background-size: 350% 350%;
+            color: #FFFFFF;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            padding: 12px 20px;
+            font-size: 14px;
+            letter-spacing: 0.06em;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 700;
+            animation: burgundyShift 7s ease infinite;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-order:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 18px rgba(185, 28, 44, 0.45);
+        }
+
+        @keyframes burgundyShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body class="bg-obsidian-900 text-chalk font-sans antialiased selection:bg-crimson selection:text-white">
+
+    <!-- Navigation Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-white/10 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-full overflow-hidden border-2 border-crimson shadow-lg transform group-hover:rotate-6 transition-transform duration-300 bg-obsidian-950 flex-shrink-0">
+                    <img src="KALYE CAFE.jpg" alt="Kalye Cafe Logo" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=200'">
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif text-2xl font-bold tracking-wider text-snow group-hover:text-crimson-bright transition-colors">Kalye Cafe</span>
+                    <span class="text-[10px] tracking-[0.25em] text-chalk/80 uppercase -mt-1">Roast & Brew</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide">
+                <a href="#hero" class="text-snow hover:text-crimson-bright transition-colors duration-200">Home</a>
+                <a href="#menu" class="text-chalk hover:text-crimson-bright transition-colors duration-200">Menu</a>
+                <a href="#location" class="text-chalk hover:text-crimson-bright transition-colors duration-200">Location</a>
+            </nav>
+
+            <!-- Action Buttons & Cart Toggle -->
+            <div class="flex items-center space-x-3">
+                <button id="cart-toggle-btn" onclick="toggleCart()" class="relative inline-flex items-center gap-2 px-4 py-2 rounded-full bg-obsidian-800 hover:bg-burgundy border border-white/15 text-snow text-sm font-medium transition">
+                    <i class="fa-solid fa-bag-shopping text-crimson-bright"></i>
+                    <span>Order</span>
+                    <span id="cart-count" class="px-2 py-0.5 text-xs rounded-full bg-crimson text-white font-bold">0</span>
+                </button>
+
+                <a href="#menu" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-crimson hover:bg-crimson-hover text-snow text-sm font-semibold transition-all duration-300 shadow-md hover:shadow-crimson/30 transform hover:-translate-y-0.5">
+                    Order Ahead
+                </a>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-chalk hover:text-snow hover:bg-obsidian-800 focus:outline-none" aria-label="Toggle Menu">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-obsidian-950/95 border-b border-white/10 px-4 pt-2 pb-6 space-y-3">
+            <a href="#hero" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-snow hover:bg-obsidian-800">Home</a>
+            <a href="#menu" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-chalk hover:bg-obsidian-800">Menu</a>
+            <a href="#location" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-chalk hover:bg-obsidian-800">Location</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-screen flex items-center pt-24 pb-16 hero-bg overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="grid md:grid-cols-12 gap-12 items-center">
+
+                <!-- Hero Content Left -->
+                <div class="md:col-span-7 space-y-6 text-center md:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-obsidian-800/90 border border-crimson/50 text-snow text-xs font-semibold uppercase tracking-widest crimson-glow">
+                        <i class="fa-solid fa-mug-hot text-crimson-bright animate-steam"></i>
+                        Micro-Batch Roasted in City Center
+                    </div>
+
+                    <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-snow leading-tight">
+                        Kalye Cafe, <br>
+                        <span class="italic text-crimson-bright font-normal">Crafted</span> for Everyday Moments.
+                    </h1>
+
+                    <p class="text-chalk text-base sm:text-lg max-w-xl mx-auto md:mx-0 font-light leading-relaxed">
+                        Proverbs 16:3 "Commit your work to the Lord, and your plans will be established."
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 pt-4">
+                        <a href="#menu" class="w-full sm:w-auto px-8 py-4 rounded-full bg-crimson hover:bg-crimson-hover text-snow font-semibold text-center shadow-lg shadow-crimson/25 transition-all duration-300 transform hover:-translate-y-0.5">
+                            Explore Our Menu
+                        </a>
+                        <a href="#location" class="w-full sm:w-auto px-8 py-4 rounded-full border border-white/30 hover:border-crimson-bright text-snow hover:text-crimson-bright font-medium text-center backdrop-blur-sm transition-all duration-300">
+                            Visit Our Cafe
+                        </a>
+                    </div>
+
+                    <!-- Quick Highlight Stats -->
+                    <div class="grid grid-cols-3 gap-4 pt-8 border-t border-white/15 max-w-md mx-auto md:mx-0">
+                        <div>
+                            <span class="block font-serif text-2xl lg:text-3xl font-bold text-snow">100%</span>
+                            <span class="text-xs text-chalk/80">Arabica Beans</span>
+                        </div>
+                        <div>
+                            <span class="block font-serif text-2xl lg:text-3xl font-bold text-snow">12+</span>
+                            <span class="text-xs text-chalk/80">Daily Brews</span>
+                        </div>
+                        <div>
+                            <span class="block font-serif text-2xl lg:text-3xl font-bold text-crimson-bright">4.9★</span>
+                            <span class="text-xs text-chalk/80">Local Ratings</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Visual Right -->
+                <div class="md:col-span-5 relative flex justify-center">
+                    <div class="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full p-2 bg-gradient-to-tr from-crimson via-burgundy to-white/30">
+                        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=800&auto=format&fit=crop" alt="Pour over coffee being prepared" class="w-full h-full object-cover rounded-full shadow-2xl border-4 border-obsidian-950">
+
+                        <!-- Floating Badge Card -->
+                        <div class="absolute -bottom-4 -left-4 sm:left-0 bg-obsidian-950/95 backdrop-blur-md p-4 rounded-2xl border border-white/15 shadow-xl flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-burgundy flex items-center justify-center text-snow">
+                                <i class="fa-solid fa-award text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-snow">WEBSITE PROJECT</p>
+                                <p class="text-[10px] text-chalk/80">Crafted with Precision</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Menu Section -->
+    <section id="menu" class="py-24 bg-obsidian-900 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-crimson-bright font-semibold text-xs tracking-widest uppercase">Curated Selection</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-snow mt-2">Our CAFE Menu</h2>
+                <p class="text-chalk mt-3 text-sm sm:text-base">Handcrafted drinks, slow pour-overs, and freshly baked pastries delivered daily from our bakery partners.</p>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap justify-center items-center gap-3 mb-10" id="menu-filters">
+                <button id="filter-hot" onclick="filterMenu('hot')" class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium border border-white/15 bg-burgundy text-snow hover:bg-crimson transition-all shadow-md flex items-center gap-2">
+                    <i class="fa-solid fa-mug-hot text-lg"></i>
+                    <span>Espresso & Coffee (Hot)</span>
+                </button>
+
+                <button id="filter-signature" onclick="filterMenu('signature')" class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium border border-white/15 bg-obsidian-800 text-chalk hover:bg-burgundy hover:text-snow transition-all shadow-md flex items-center gap-2">
+                    <i class="fa-solid fa-mug-saucer text-lg"></i>
+                    <span>Signature Brews</span>
+                </button>
+
+                <button id="filter-tea" onclick="filterMenu('tea')" class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium border border-white/15 bg-obsidian-800 text-chalk hover:bg-burgundy hover:text-snow transition-all shadow-md flex items-center gap-2">
+                    <i class="fa-solid fa-leaf text-lg"></i>
+                    <span>Teas & Botanicals</span>
+                </button>
+
+                <button id="filter-pastry" onclick="filterMenu('pastry')" class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium border border-white/15 bg-obsidian-800 text-chalk hover:bg-burgundy hover:text-snow transition-all shadow-md flex items-center gap-2">
+                    <i class="fa-solid fa-cookie-bite text-lg"></i>
+                    <span>Pastries</span>
+                </button>
+            </div>
+
+            <!-- Menu Grid Container -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="menu-grid">
+
+                <!-- === HOT COFFEE ITEMS === -->
+                <div class="card bg-obsidian-800 p-4 rounded-xl border border-white/10 hover:border-crimson/50 transition flex flex-col justify-between" data-category="hot">
+                    <div>
+                        <img src="LokoAmericano1.jpg" alt="Loko Americano" class="w-full h-48 object-cover rounded-lg mb-4 bg-obsidian-950" onerror="this.src='https://images.unsplash.com/photo-1561882468-9110e03e0f78?w=500'">
+                        <div class="text-lg font-bold text-snow">Loko Americano</div>
+                        <div class="text-crimson-bright font-bold mb-4">₱60.00</div>
+                    </div>
+                    <button class="btn-order" onclick="addToCart('Loko Americano', 60)">ORDER NOW</button>
+                </div>
+
+                <div class="card bg-obsidian-800 p-4 rounded-xl border border-white/10 hover:border-crimson/50 transition flex flex-col justify-between" data-category="hot">
+                    <div>
+                        <img src="KantoBarako1.jpg" alt="Kanto Barako" class="w-full h-48 object-cover rounded-lg mb-4 bg-obsidian-950" onerror="this.src='https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=500'">
+                        <div class="text-lg font-bold text-snow">Kanto Barako</div>
+                        <div class="text-crimson-bright font-bold mb-4">₱70.00</div>
+                    </div>
+                    <button class="btn-order" onclick="addToCart('Kanto Barako', 70)">ORDER NOW</button>
+                </div>
+
+                <div class="card bg-obsidian-800 p-4 rounded-xl border border-white/10 hover:border-crimson/50 transition flex flex-col justify-between" data-category="hot">
+                    <div>
+                        <img src="CaramelMacchiato1.jpg" alt="Caramel Macchiato" class="w-full h-48 object-cover rounded-lg mb-4 bg-obsidian-950" onerror="this.src='https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500'">
+                        <div class="text-lg font-bold text-snow">Caramel Macchiato</div>
+                        <div class="text-crimson-bright font-bold mb-4">₱90.00</div>
+                    </div>
+                    <button class="btn-order" onclick="addToCart('Caramel Macchiato', 90)">ORDER NOW</button>
+                </div>
+
+                <div class="card bg-obsidian-800 p-4 rounded-xl border border-white/10 hover:border-crimson/50 transition flex flex-col justify-between" data-category="hot">
+                    <div>
+                        <img src="Mochalye1.jpg" alt="Mochalye" class="w-full h-48 object-cover rounded-lg mb-4 bg-obsidian-950" onerror="this.src='https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=500'">
+                        <div class="text-lg font-bold text-snow">Mochalye</div>
+                        <div class="text-crimson-bright font-bold mb-4">₱85.00</div>
+                    </div>
+                    <button class="btn-order" onclick="addToCart('Mochalye', 85)">ORDER NOW</button>
+                </div>
+
+                <div class="card bg-obsidian-800 p-4 rounded-xl border border-white/10 hover:border-crimson/50 transition flex flex-col justify-between" data-category="hot">
+                    <div>
+                        <img src="TambayLatte1.jpg" alt="Tambay Latte" class="w-full h-48 object-cover rounded-lg mb-4 bg-obsidian-950" onerror="this.src='https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=500'">
+                        <div class="text-lg font-bold text-snow">Tambay Latte</div>
+                        <div class="text-crimson-bright font-bold mb-4">₱80.00</div>
+                    </div>
+                    <button class="btn-order" onclick="addToCart('Tambay Latte', 80)">ORDER NOW</button>
+                </div>
+
+                <!-- === SIGNATURE BREWS ITEMS === -->
+                <div class="card bg-obsidian-800 p-4 rounded-xl border border-white/10 hover:border-crimson/50 transition flex flex-col justify-between hidden" data-category="signature">
+                    <div>
+                        <img src="KapengOtits1.jpg" alt="Kapeng Otits" class="w-full h-48 object-cover rounded-lg mb-4 bg-obsidian-950" onerror="this.src='https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=500'">
+                        <div class="text-lg font-bold text-snow">Kapeng Otits</div>
+                        <div class="text-crimson-bright font-bold mb-4">₱110.00</div>
+                    </div>
+                    <button class="btn-order" onclick="addToCart('Kapeng Otits', 110)">ORDER NOW</button>
+                </div>
+
+                <div class="card bg-obsidian-800 p-4 rounded-xl border border-white/10 hover:border-crimson/50 transition flex flex-col justify-between hidden" data-category="signature">
+                    <div>
+                        <img src="KapengAuntie1.jpg" alt="Kapeng Auntie" class="w-full h-48 object-cover rounded-lg mb-4 bg-obsidian-950" onerror="this.src='https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500'">
+                        <div class="text-lg font-bold text-snow">Kapeng Auntie</div>
+                        <div class="text-crimson-bright font-bold mb-4">₱125.00</div>
+                    </div>
+                    <button class="btn-order" onclick="addToCart('Kapeng Auntie', 125)">ORDER NOW</button>
+                </div>
+
+                <div class="card bg-obsidian-800 p-4 rounded-xl border border-white/10 hover:border-crimson/50 transition flex flex-col justify-between hidden" data-category="signature">
+                    <div>
+                        <img src="MangoChikito1.jpg" alt="Mango Chikito" class="w-full h-48 object-cover rounded-lg mb-4 bg-obsidian-950" onerror="this.src='https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=500'">
+                        <div class="text-lg font-bold text-snow">Mango Chikito</div>
+                        <div class="text-crimson-bright font-bold mb-4">₱120.00</div>
+                    </div>
+                    <button class="btn-order" onclick="addToCart('Mango Chikito', 120)">ORDER NOW</button>
+                </div>
+
+                <div class="card bg-obsidian-800 p-4 rounded-xl border border-white/10 hover:border-crimson/50 transition flex flex-col justify-between hidden" data-category="signature">
+                    <div>
+                        <img src="BerryMerry1.jpg" alt="Berry Merry" class="w-full h-48 object-cover rounded-lg mb-4 bg-obsidian-950" onerror="this.src='https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500'">
+                        <div class="text-lg font-bold text-snow">Berry Merry</div>
+                        <div class="text-crimson-bright font-bold mb-4">₱125.00</div>
+                    </div>
+                    <button class="btn-order" onclick="addToCart('Berry Merry', 125)">ORDER NOW</button>
+                </div>
+
+                <!-- === TEAS & BOTANICALS ITEMS === -->
+                <div class="card bg-obsidian-800 p-4 rounded-xl border border-white/10 hover:border-crimson/50 transition flex flex-col justify-between hidden" data-category="tea">
+                    <div>
+                        <img src="AsimKilig4.jpg" alt="Asim Kilig" class="w-full h-48 object-cover rounded-lg mb-4 bg-obsidian-950" onerror="this.src='https://images.unsplash.com/photo-1561882468-9110e03e0f78?w=500'">
+                        <div class="text-lg font-bold text-snow">Asim Kilig</div>
+                        <div class="text-crimson-bright font-bold mb-4">₱80.00</div>
+                    </div>
+                    <button class="btn-order" onclick="addToCart('Asim Kilig', 80)">ORDER NOW</button>
+                </div>
+
+                <div class="card bg-obsidian-800 p-4 rounded-xl border border-white/10 hover:border-crimson/50 transition flex flex-col justify-between hidden" data-category="tea">
+                    <div>
+                        <img src="Honey4.jpg" alt="Honey" class="w-full h-48 object-cover rounded-lg mb-4 bg-obsidian-950" onerror="this.src='https://images.unsplash.com/photo-1561882468-9110e03e0f78?w=500'">
+                        <div class="text-lg font-bold text-snow">Honey</div>
+                        <div class="text-crimson-bright font-bold mb-4">₱95.00</div>
+                    </div>
+                    <button class="btn-order" onclick="addToCart('Honey', 95)">ORDER NOW</button>
+                </div>
+
+                <div class="card bg-obsidian-800 p-4 rounded-xl border border-white/10 hover:border-crimson/50 transition flex flex-col justify-between hidden" data-category="tea">
+                    <div>
+                        <img src="PeachAbo4.jpg" alt="Peach Abo" class="w-full h-48 object-cover rounded-lg mb-4 bg-obsidian-950" onerror="this.src='https://images.unsplash.com/photo-1561882468-9110e03e0f78?w=500'">
+                        <div class="text-lg font-bold text-snow">Peach Abo</div>
+                        <div class="text-crimson-bright font-bold mb-4">₱110.00</div>
+                    </div>
+                    <button class="btn-order" onclick="addToCart('Peach Abo', 110)">ORDER NOW</button>
+                </div>
+
+                <div class="card bg-obsidian-800 p-4 rounded-xl border border-white/10 hover:border-crimson/50 transition flex flex-col justify-between hidden" data-category="tea">
+                    <div>
+                        <img src="MatchaMuna4.jpg" alt="Matcha Muna" class="w-full h-48 object-cover rounded-lg mb-4 bg-obsidian-950" onerror="this.src='https://images.unsplash.com/photo-1561882468-9110e03e0f78?w=500'">
+                        <div class="text-lg font-bold text-snow">Matcha Muna</div>
+                        <div class="text-crimson-bright font-bold mb-4">₱115.00</div>
+                    </div>
+                    <button class="btn-order" onclick="addToCart('Matcha Muna', 115)">ORDER NOW</button>
+                </div>
+
+                <!-- === PASTRIES ITEMS === -->
+                <div class="card bg-obsidian-800 p-4 rounded-xl border border-white/10 hover:border-crimson/50 transition flex flex-col justify-between hidden" data-category="pastry">
+                    <div>
+                        <img src="ChocoChip Cookies.jpg" alt="Chocolate Chip Cookies" class="w-full h-48 object-cover rounded-lg mb-4 bg-obsidian-950" onerror="this.src='https://images.unsplash.com/photo-1561882468-9110e03e0f78?w=500'">
+                        <div class="text-lg font-bold text-snow">Chocolate Chip Cookies</div>
+                        <div class="text-crimson-bright font-bold mb-4">₱70.00</div>
+                    </div>
+                    <button class="btn-order" onclick="addToCart('Chocolate Chip Cookies', 70)">ORDER NOW</button>
+                </div>
+
+                <div class="card bg-obsidian-800 p-4 rounded-xl border border-white/10 hover:border-crimson/50 transition flex flex-col justify-between hidden" data-category="pastry">
+                    <div>
+                        <img src="UbePandesal.jpg" alt="Ube Pandesal" class="w-full h-48 object-cover rounded-lg mb-4 bg-obsidian-950" onerror="this.src='https://images.unsplash.com/photo-1561882468-9110e03e0f78?w=500'">
+                        <div class="text-lg font-bold text-snow">Ube Pandesal</div>
+                        <div class="text-crimson-bright font-bold mb-4">₱15.00</div>
+                    </div>
+                    <button class="btn-order" onclick="addToCart('Ube Pandesal', 15)">ORDER NOW</button>
+                </div>
+
+                <div class="card bg-obsidian-800 p-4 rounded-xl border border-white/10 hover:border-crimson/50 transition flex flex-col justify-between hidden" data-category="pastry">
+                    <div>
+                        <img src="BananaBread.jpg" alt="Banana Bread" class="w-full h-48 object-cover rounded-lg mb-4 bg-obsidian-950" onerror="this.src='https://images.unsplash.com/photo-1561882468-9110e03e0f78?w=500'">
+                        <div class="text-lg font-bold text-snow">Banana Bread</div>
+                        <div class="text-crimson-bright font-bold mb-4">₱25.00</div>
+                    </div>
+                    <button class="btn-order" onclick="addToCart('Banana Bread', 25)">ORDER NOW</button>
+                </div>
+
+                <div class="card bg-obsidian-800 p-4 rounded-xl border border-white/10 hover:border-crimson/50 transition flex flex-col justify-between hidden" data-category="pastry">
+                    <div>
+                        <img src="FilipinoEnsaymada.jpg" alt="Filipino Ensaymada" class="w-full h-48 object-cover rounded-lg mb-4 bg-obsidian-950" onerror="this.src='https://images.unsplash.com/photo-1561882468-9110e03e0f78?w=500'">
+                        <div class="text-lg font-bold text-snow">Filipino Ensaymada</div>
+                        <div class="text-crimson-bright font-bold mb-4">₱20.00</div>
+                    </div>
+                    <button class="btn-order" onclick="addToCart('Filipino Ensaymada', 20)">ORDER NOW</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Location & Social Links Section -->
+    <section id="location" class="py-24 bg-obsidian-950 border-t border-white/10">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="text-crimson-bright font-semibold text-xs tracking-widest uppercase">Find Us</span>
+            <h2 class="font-serif text-3xl sm:text-5xl font-bold text-snow mt-2">Visit Kalye Cafe</h2>
+            <p class="text-chalk mt-4 max-w-xl mx-auto text-sm sm:text-base">
+                Open daily from 7:00 AM to 10:00 PM for dine-in, takeaways, and late-night study sessions.
+            </p>
+
+            <!-- Address & Hours Card -->
+            <div class="mt-8 bg-obsidian-800/80 border border-white/10 rounded-2xl p-6 sm:p-8 max-w-2xl mx-auto shadow-xl">
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-chalk">
+                    <div class="flex items-center gap-2.5">
+                        <i class="fa-solid fa-location-dot text-crimson-bright text-lg"></i>
+                        <span>City Center, Metro Manila, Philippines</span>
+                    </div>
+                    <span class="hidden sm:inline text-white/20">|</span>
+                    <div class="flex items-center gap-2.5">
+                        <i class="fa-regular fa-clock text-crimson-bright text-lg"></i>
+                        <span>Mon – Sun: 7:00 AM – 10:00 PM</span>
+                    </div>
+                </div>
+
+                <!-- Get Directions Button -->
+                <div class="mt-7">
+                    <a href="https://www.google.com/maps/search/?api=1&query=Kalye+Cafe" target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-full bg-crimson hover:bg-crimson-hover text-snow font-semibold text-sm shadow-lg shadow-crimson/30 transition-all duration-300 transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-diamond-turn-right text-base"></i>
+                        <span>Get Directions</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Social Media Links (Instagram, TikTok, Facebook) -->
+            <div class="mt-12 pt-8 border-t border-white/10">
+                <p class="text-xs uppercase tracking-[0.2em] text-chalk/70 mb-5">Follow Our Socials</p>
+                <div class="flex flex-wrap items-center justify-center gap-4">
+                    <!-- Instagram -->
+                    <a href="https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.instagram.com%2F_u%2Fkalyecafee%3Ffbclid%3DIwZXh0bgNhZW0CMTAAcGRvZgVicmlkETF2dXdWNmhuRnRNeEJDejJXc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABH54d0VzQHnR5VruS0sEnzG1mOxbt_Rx3X4KtTEkRHjBjzLjaSQrQg6ztBTOj_aem_cneArRW_OBFOpVED1hLKvw&h=AUC0X1tSRJ1DukKYylxLYil1YZaRG0FNYLMbj8oXlordNnJpjf8B6HOWm-Y1m3qpT7XC73BJFaW_O0cJJL_CC5luyRlK5BQVU5G2-9ug9iOEh8rwfgut0cNrMHOm8bY6" target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-obsidian-800 hover:bg-burgundy border border-white/15 hover:border-crimson-bright text-snow text-sm font-medium transition-all duration-300 shadow-md">
+                        <i class="fa-brands fa-instagram text-lg text-crimson-bright"></i>
+                        <span>Instagram</span>
+                    </a>
+
+                    <!-- TikTok -->
+                    <a href="https://www.tiktok.com/@officialkalyecafe?fbclid=IwY2xjawVzqppleHRuA2FlbQIxMABwZG9mBWJyaWQRMXZ1d1Y2aG5GdE14QkN6MldzcnRjBmFwcF9pZBAyMjIwMzkxNzg4MjAwODkyAAEfbCM-Y2c5gDZwD14R0sbeTCi5P0LC5EuHCqj_C6i7VC4zLPCq8Geh2T5ZTnk_aem_jw2yZD48xRKI0JaDTrYoTw" target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-obsidian-800 hover:bg-burgundy border border-white/15 hover:border-crimson-bright text-snow text-sm font-medium transition-all duration-300 shadow-md">
+                        <i class="fa-brands fa-tiktok text-lg text-crimson-bright"></i>
+                        <span>TikTok</span>
+                    </a>
+
+                    <!-- Facebook -->
+                    <a href="https://www.facebook.com/profile.php?id=61596644992459&rdid=NMi2pzANbWbmTxpS&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F19vkzmqHBW#" target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-obsidian-800 hover:bg-burgundy border border-white/15 hover:border-crimson-bright text-snow text-sm font-medium transition-all duration-300 shadow-md">
+                        <i class="fa-brands fa-facebook-f text-lg text-crimson-bright"></i>
+                        <span>Facebook</span>
+                    </a>
+                </div>
+
+                <p class="text-xs text-chalk/50 mt-8">© 2026 Kalye Cafe. All rights reserved.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide-Over Order Cart Drawer -->
+    <div id="cart-drawer" class="fixed inset-y-0 right-0 w-full max-w-sm bg-obsidian-950 border-l border-white/15 shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-5 border-b border-white/10 flex items-center justify-between">
+            <h3 class="font-serif text-2xl font-bold text-snow">Your Order</h3>
+            <button onclick="toggleCart()" class="text-chalk hover:text-snow" aria-label="Close Cart">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+        </div>
+
+        <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-3">
+            <p class="text-center text-chalk/60 text-sm mt-8">Your order bag is empty.</p>
+        </div>
+
+        <div class="p-5 border-t border-white/10 space-y-4">
+            <div class="flex items-center justify-between text-base font-bold">
+                <span class="text-chalk">Total</span>
+                <span id="cart-total" class="text-crimson-bright text-xl">₱0.00</span>
+            </div>
+            <button onclick="checkoutOrder()" class="w-full py-3 rounded-full bg-crimson hover:bg-crimson-hover text-snow font-semibold transition">
+                Place Order
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const cart = [];
+
+        function filterMenu(category) {
+            const cards = document.querySelectorAll('.card');
+            const buttons = {
+                hot: document.getElementById('filter-hot'),
+                signature: document.getElementById('filter-signature'),
+                tea: document.getElementById('filter-tea'),
+                pastry: document.getElementById('filter-pastry')
+            };
+
+            const defaultClass = "px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium border border-white/15 bg-obsidian-800 text-chalk hover:bg-burgundy hover:text-snow transition-all shadow-md flex items-center gap-2";
+            const activeClass = "px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium border border-white/15 bg-burgundy text-snow hover:bg-crimson transition-all shadow-md flex items-center gap-2";
+
+            Object.keys(buttons).forEach(key => {
+                buttons[key].className = key === category ? activeClass : defaultClass;
+            });
+
+            cards.forEach(card => {
+                if (card.getAttribute('data-category') === category) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        function addToCart(name, price) {
+            const existing = cart.find(item => item.name === name);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ name, price, qty: 1 });
+            }
+            renderCart();
+            openCart();
+        }
+
+        function updateQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            renderCart();
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items');
+            const totalEl = document.getElementById('cart-total');
+            const countEl = document.getElementById('cart-count');
+
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+            countEl.textContent = totalItems;
+            totalEl.textContent = `₱${totalPrice.toFixed(2)}`;
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-center text-chalk/60 text-sm mt-8">Your order bag is empty.</p>';
+                return;
+            }
+
+            container.innerHTML = cart.map((item, idx) => `
+                <div class="flex items-center justify-between bg-obsidian-800 p-3 rounded-lg border border-white/10">
+                    <div>
+                        <div class="font-semibold text-snow text-sm">${item.name}</div>
+                        <div class="text-xs text-crimson-bright">₱${(item.price * item.qty).toFixed(2)}</div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="updateQty(${idx}, -1)" class="w-6 h-6 rounded bg-obsidian-950 border border-white/15 text-snow text-xs">-</button>
+                        <span class="text-sm font-semibold text-snow">${item.qty}</span>
+                        <button onclick="updateQty(${idx}, 1)" class="w-6 h-6 rounded bg-obsidian-950 border border-white/15 text-snow text-xs">+</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleCart() {
+            document.getElementById('cart-drawer').classList.toggle('translate-x-full');
+        }
+
+        function openCart() {
+            document.getElementById('cart-drawer').classList.remove('translate-x-full');
+        }
+
+        function checkoutOrder() {
+            if (cart.length === 0) return;
+            alert('Thank you! Your order has been received.');
+            cart.length = 0;
+            renderCart();
+            toggleCart();
+        }
+
+        // Mobile menu toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
